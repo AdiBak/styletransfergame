@@ -55,8 +55,8 @@ const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, process
                 alt={`Process step ${index + 1}`}
                 className="process-image"
                 style={{
-                  opacity: currentImageIndex === index ? 1 : 0,
-                  transition: 'opacity 0.5s ease-in-out',
+                  opacity: currentImageIndex === index ? 1 : 0
+                  //transition: 'opacity 0.5s ease-in-out',
                 }}
               />
             ))}

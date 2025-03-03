@@ -202,7 +202,7 @@
   background-color: antiquewhite;
   justify-content: center;
   align-items: center;
-  animation: appear 0.3s ease-out;
+  /*animation: appear 0.3s ease-out;*/
 }
 
 .image-row {
@@ -262,7 +262,7 @@
   object-fit: contain;
   opacity: 0;
   border-radius: 30px;
-  transition: opacity 0.5s ease-in-out;
+  /*transition: opacity 0.5s ease-in-out;*/
 }
 
 .process-animation {
