@@ -50,7 +50,7 @@ const HelpMenu = ({ onClose }) => {
     <div className="help-overlay">
       <div className="help-window">
         <button className="help-close-button" onClick={onClose}>✖</button>
-        <h2>Help & How to Play</h2>
+        <h2>Game Information</h2>
 
         {/* How to Play Section */}
         <section className="help-section">
@@ -98,7 +98,6 @@ const HelpMenu = ({ onClose }) => {
 
           <p><em>Look for shapes, textures, colors, layouts – any aspects of the stylized image that look similar to 2 of the image choices.</em></p>
         </section>
-        
         {/* Credits Section */}
         <section className="help-section">
           <h3>Credits</h3>
@@ -197,6 +196,8 @@ const Game = () => {
   const [isNextRoundEnabled, setIsNextRoundEnabled] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [gamePaused, setGamePaused] = useState(false);
+  const [score, setScore] = useState(0);
+  const [floatingPoints, setFloatingPoints] = useState(null);
 
   // Timer state variables
   const [timeRemaining, setTimeRemaining] = useState(30);
@@ -324,6 +325,19 @@ const Game = () => {
       triggerConfetti();
       setIsNextRoundEnabled(true);
       setTimerActive(false); // Stop the timer
+
+      // Calculate points based on time left
+      let pointsEarned = 0;
+      if (timeRemaining > 20) pointsEarned = 100;
+      else if (timeRemaining > 10) pointsEarned = 50;
+      else pointsEarned = 20;
+
+      setScore(prevScore => prevScore + pointsEarned);
+      setFloatingPoints(`+${pointsEarned}`);
+
+      // Remove floating points text after a short delay
+      setTimeout(() => setFloatingPoints(null), 1000);
+
     } else {
       highlightImages(guessedPair, "incorrect");
       shakeImages(guessedPair);
@@ -459,6 +473,13 @@ const Game = () => {
               >
                 Next Round
               </button>
+
+              {/* Points Display */}
+              <div className="points-container">
+                Points: {score}
+                {floatingPoints && <div className="floating-points">{floatingPoints}</div>}
+              </div>
+
             </>
           )}
 

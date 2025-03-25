@@ -514,7 +514,7 @@
 
 /* HELP SECTION STYLES */
 .help-section {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 10px;
   text-align: left;
 }
@@ -577,4 +577,32 @@
 
 .help-window a:hover {
   text-decoration: underline;
+}
+
+/* Points Display (Bottom Left) */
+.points-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Floating Points Effect */
+.floating-points {
+  position: absolute;
+  bottom: 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: green;
+  opacity: 1;
+  animation: floatUp 1s ease-in-out;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-20px); opacity: 0; }
 }

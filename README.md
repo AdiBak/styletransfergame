@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# 🎨 Guess the Style Transferred Images 🎮  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An interactive game where you **identify the content and style images** used to create a **stylized image** via **neural style transfer**.  
+Test your ability to recognize styles, challenge yourself with a timer-based scoring system, and enjoy a fun, educational experience in AI-powered art!  
 
-## Available Scripts
+![Game Demo](public/demo-play.mp4) 
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🌟 Inspiration  
+I wanted to create a **fun and engaging way** to introduce people to **style transfer**—a fascinating AI technique that blends artistic styles with real images.  
+By turning it into a game, players can **learn about AI while having fun!** The scoring system makes it **casual and enjoyable**, while the visual animations keep it **engaging**.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🎨 What is Style Transfer?  
+**Neural Style Transfer (NST)** is a deep learning technique that **applies the artistic style of one image to another**.  
 
-### `npm test`
+For example, an AI can take a **mountain landscape** and transform it into a **Van Gogh-style painting!**  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| **Content Image** | **Style Image** | **Stylized Output** |
+|------------------|---------------|-------------------|
+| ![Content](https://aasraecotreks.com.np/wp-content/uploads/2019/01/Island-Peak.jpg) | ![Style](https://upload.wikimedia.org/wikipedia/commons/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg) | ![Stylized](https://i.ibb.co/HsbtQDp/Screenshot-2025-03-25-at-3-44-53-PM.png) |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ⚙️ Development Process  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 💻 Tech Stack  
+🔹 **Frontend:** [React.js](https://react.dev) (for dynamic UI).  
+🔹 **State Management:** React Hooks (`useState`, `useEffect`).  
+🔹 **Animations & Effects:** CSS Keyframes, `canvas-confetti`.  
+🔹 **Game Logic:** JavaScript (Shuffling, Timer, Score Tracking).  
+🔹 **Data Source:** JSON file mapping **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🎮 How to Play  
+1️⃣ **Watch the intro video** (or skip it) to understand style transfer.  
+2️⃣ **Observe the stylized image** (left side of screen).  
+3️⃣ **Select two images** (from 4 choices) that represent the **original content & style**.  
+4️⃣ **Earn points based on your speed!**  
+5️⃣ **Use the "?" Help button** anytime to pause and learn more.  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+💡 **Hint:** Pay close attention to textures & colors to find the correct match!  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Your score is based on how quickly you guess correctly:  
+- **< 10 seconds → +100 points**  
+- **10 - 20 seconds → +50 points**  
+- **20 - 30 seconds → +20 points**  
 
-## Learn More
+Total points are displayed at the **bottom left** of the screen. A floating `+100`, `+50`, or `+20` appears when points are added.  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📜 Credits  
+🎨 **Style Transfer Model:**  
+- [PyTorch Style Transfer](https://github.com/crowsonkb/style-transfer-pytorch)  
 
-### Code Splitting
+🖼 **Image Datasets Used:**  
+- [Impressionist Landscapes](https://www.kaggle.com/datasets/robgonsalves/impressionistlandscapespaintings)  
+- [Landscape Pictures](https://www.kaggle.com/arnaud58/landscape-pictures)  
+- [Paintings Dataset](https://www.kaggle.com/datasets/heyitsfahd/paintings)  
+- [AI-Generated U.S. Cities](https://www.kaggle.com/datasets/jeremycmorgan/photgraphs-of-1000-u-s-cities-ai-generated)  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+💻 **Built with ❤️ by [AdiBak]**  
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🚀 Run Locally  
+1️⃣ **Clone the Repository:**  
+```bash
+git clone https://github.com/yourusername/guess-the-style-transferred-images.git
+cd guess-the-style-transferred-images
