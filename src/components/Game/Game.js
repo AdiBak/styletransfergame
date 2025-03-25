@@ -3,6 +3,119 @@ import React, { useState, useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
 import "./Game.css";
 
+const IntroVideo = ({ onSkip, onVideoEnd }) => {
+  const videoRef = useRef(null);
+  const [videoStarted, setVideoStarted] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(false);
+
+  const handlePlayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      setVideoStarted(true);
+    }
+  };
+
+  const handleVideoEnd = () => {
+    setVideoEnded(true);
+  };
+
+  return (
+    <div className="video-overlay">
+      <video ref={videoRef} className="intro-video" onEnded={handleVideoEnd} controls>
+        <source src="intro-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {!videoStarted && (
+        <button className="video-play-button" onClick={handlePlayVideo}>
+          ▶
+        </button>
+      )}
+
+      <button className="video-skip-button" onClick={onSkip}>
+        ✖
+      </button>
+
+      {videoEnded && (
+        <button className="video-start-button" onClick={onVideoEnd}>
+          Play
+        </button>
+      )}
+    </div>
+  );
+};
+
+const HelpMenu = ({ onClose }) => {
+  return (
+    <div className="help-overlay">
+      <div className="help-window">
+        <button className="help-close-button" onClick={onClose}>✖</button>
+        <h2>Help & How to Play</h2>
+
+        {/* How to Play Section */}
+        <section className="help-section">
+          <h3>How to Play</h3>
+          <p><strong>Select the correct pair of images that were used to generate the displayed <em>stylized image</em>.</strong></p>
+          <ul>
+            <li>You will see a stylized image on the left.</li>
+            <li>Choose the two images that match the original pair of images.</li>
+            <li>If correct, you move to the next round! 🎉</li>
+            <li>If wrong, try again!</li>
+            <li>You have 30 seconds per round.</li>
+          </ul>
+
+          {/* Embedded Demo Video */}
+          <div className="help-video-container">
+            <video controls>
+              <source src="demo-play.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </section>
+
+        {/* What is Style Transfer Section */}
+        <section className="help-section">
+          <h3>What is Style Transfer?</h3>
+          <p>Style transfer is a deep learning technique that applies the artistic style of one image to another content image. <br />
+            For example, it can make a photograph look like a Van Gogh painting! <br />
+            Below, see how the result preserves the mountain from the content image, and colors it like the style image?</p>
+
+          {/* Example Images */}
+          <div className="style-transfer-example">
+            <div className="st-image-container">
+              <img src="https://aasraecotreks.com.np/wp-content/uploads/2019/01/Island-Peak.jpg" alt="Island Peak" />
+              <p className="st-caption">Original Content</p>
+            </div>
+            <div className="st-image-container">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="Starry Night" />
+              <p className="st-caption">Style Image</p>
+            </div>
+            <div className="st-image-container">
+              <img src="https://i.ibb.co/HsbtQDp/Screenshot-2025-03-25-at-3-44-53-PM.png" alt="Stylized Example" />
+              <p className="st-caption">Stylized Result</p>
+            </div>
+          </div>
+
+          <p><em>Look for shapes, textures, colors, layouts – any aspects of the stylized image that look similar to 2 of the image choices.</em></p>
+        </section>
+        
+        {/* Credits Section */}
+        <section className="help-section">
+          <h3>Credits</h3>
+          <p>🎨 <em>Style Transfer Model:</em> <a href="https://github.com/crowsonkb/style-transfer-pytorch" target="_blank">PyTorch Style Transfer</a></p>
+          <p>🖼️ <em>Image Datasets Used:</em></p>
+          <ul>
+            <li><a href="https://www.kaggle.com/datasets/robgonsalves/impressionistlandscapespaintings" target="_blank">Impressionist Landscapes Paintings</a></li>
+            <li><a href="https://www.kaggle.com/arnaud58/landscape-pictures" target="_blank">Landscape Pictures</a></li>
+            <li><a href="https://www.kaggle.com/datasets/heyitsfahd/paintings" target="_blank">Paintings Dataset</a></li>
+            <li><a href="https://www.kaggle.com/datasets/jeremycmorgan/photgraphs-of-1000-u-s-cities-ai-generated/" target="_blank">AI-Generated U.S. Cities Photographs</a></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  );
+};
+
 const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, processImages, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -48,6 +161,7 @@ const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, process
             </div>
           </div>
           <div className="process-animation">
+            <p className="process-step-label">Process Step {currentImageIndex + 1}</p>
             {processImages.map((img, index) => (
               <img
                 key={index}
@@ -55,8 +169,7 @@ const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, process
                 alt={`Process step ${index + 1}`}
                 className="process-image"
                 style={{
-                  opacity: currentImageIndex === index ? 1 : 0
-                  //transition: 'opacity 0.5s ease-in-out',
+                  opacity: currentImageIndex === index ? 1 : 0,
                 }}
               />
             ))}
@@ -71,6 +184,8 @@ const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, process
 };
 
 const Game = () => {
+  const [showIntro, setShowIntro] = useState(true);
+  const [gameStarted, setGameStarted] = useState(false);
   const [stylizedImage, setStylizedImage] = useState("");
   const [shuffledOptions, setShuffledOptions] = useState([]);
   const [correctContent, setCorrectContent] = useState("");
@@ -80,7 +195,9 @@ const Game = () => {
   const [processImages, setProcessImages] = useState([]);
   const [message, setMessage] = useState("");
   const [isNextRoundEnabled, setIsNextRoundEnabled] = useState(false);
-  
+  const [showHelp, setShowHelp] = useState(false);
+  const [gamePaused, setGamePaused] = useState(false);
+
   // Timer state variables
   const [timeRemaining, setTimeRemaining] = useState(30);
   const [timerActive, setTimerActive] = useState(false);
@@ -107,7 +224,7 @@ const Game = () => {
       setMessage("");
       setIsNextRoundEnabled(false);
       resetBorders();
-      
+
       // Reset and start timer
       setTimeRemaining(30);
       setTimerActive(true);
@@ -119,45 +236,57 @@ const Game = () => {
 
   useEffect(() => {
     fetchData();
-    
+
     // Cleanup timer on component unmount
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, []);
-  
-  // Timer effect
+
+  const startGame = () => {
+    setShowIntro(false);
+    setGameStarted(true);  // Game officially starts
+    setTimeRemaining(30);  // Reset timer to 30 seconds
+    setTimerActive(true);  // Start timer countdown
+  };
+
+  const toggleHelp = () => {
+    setShowHelp(!showHelp);
+    setGamePaused(!gamePaused);
+  };
+
+  // timer
   useEffect(() => {
-    if (timerActive && timeRemaining > 0) {
+    if (gameStarted && timerActive && timeRemaining > 0 && !gamePaused) {
       timerRef.current = setInterval(() => {
         setTimeRemaining(prevTime => prevTime - 1);
       }, 1000);
     } else if (timeRemaining === 0) {
-      // Time's up
       handleTimeUp();
     }
-    
+
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [timerActive, timeRemaining]);
-  
+  }, [gameStarted, timerActive, timeRemaining, gamePaused]); // 🔹 Now depends on `gamePaused`
+
+
   // Calculate timer color based on time remaining
   const getTimerColor = () => {
     if (timeRemaining > 20) return '#28a745'; // Green
     if (timeRemaining > 10) return '#ffc107'; // Yellow
     return '#dc3545'; // Red
   };
-  
+
   // Handle time up
   const handleTimeUp = () => {
     setTimerActive(false);
     setIsNextRoundEnabled(true);
-    
+
     // Highlight correct answers
     const correctPair = [correctContent, correctStyle];
     highlightCorrectAnswers(correctPair);
-    
+
     setMessage("Time's up! These are the correct options.");
   };
 
@@ -176,13 +305,18 @@ const Game = () => {
     setSelectedImages(newSelectedImages);
 
     if (newSelectedImages.length === 2) {
-      checkGuess(newSelectedImages);
+      setTimeout(() => checkGuess(newSelectedImages), 200); // Small delay to ensure the selection effect appears
     }
   };
 
   const checkGuess = (guessedPair) => {
     const isCorrect =
       guessedPair.includes(correctContent) && guessedPair.includes(correctStyle);
+
+    // Remove selected state from all images first
+    document.querySelectorAll(".option-image").forEach((img) => {
+      img.classList.remove("selected");
+    });
 
     if (isCorrect) {
       highlightImages(guessedPair, "correct");
@@ -197,7 +331,7 @@ const Game = () => {
       setTimeout(() => resetBorders(), 1000);
     }
   };
-  
+
   const highlightCorrectAnswers = (correctPair) => {
     document.querySelectorAll(".option-image").forEach((img) => {
       if (correctPair.includes(img.src)) {
@@ -255,69 +389,80 @@ const Game = () => {
 
   return (
     <div className="game-container">
-      {stylizedImage && shuffledOptions.length > 0 ? (
-        <>
-          <div className="stylized-container">
-            <img src={stylizedImage} alt="Stylized Result" />
-          </div>
-          <div className="game-phrase">Spot the Style and Content!</div>
-          
-          {/* Timer bar */}
-          <div className="timer-container">
-            <div 
-              className="timer-bar" 
-              style={{ 
-                height: `${(timeRemaining / 30) * 100}%`,
-                backgroundColor: getTimerColor()
-              }} 
-            />
-            <div className="timer-text">{timeRemaining}</div>
-          </div>
-          
-          <div className="options-container">
-            <div className="image-grid">
-              {shuffledOptions.map((option, index) => (
-                <img
-                  key={index}
-                  src={option}
-                  alt={`Option ${index + 1}`}
-                  className="option-image"
-                  onClick={() => handleImageClick(option)}
-                />
-              ))}
-            </div>
-          </div>
-          {message && (
-            <div className="message">
-              {message}
-              {isNextRoundEnabled && (
-                <button className="show-me-how" onClick={handleShowMeHow}>
-                  show me how
-                </button>
-              )}
-            </div>
-          )}
-
-          {showVisualization && (
-            <ProcessVisualization
-              contentImage={correctContent}
-              styleImage={correctStyle}
-              stylizedImage={stylizedImage}
-              processImages={processImages}
-              onClose={closeVisualization}
-            />
-          )}
-
-          <button
-            className={`next-round-button ${isNextRoundEnabled ? "active" : ""}`}
-            onClick={handleNextRound}
-            disabled={!isNextRoundEnabled}
-          >
-            Next Round
-          </button>
-        </>
+      {showIntro ? (
+        <IntroVideo onSkip={startGame} onVideoEnd={startGame} />
       ) : (
-        <p>Loading game data...</p>
+        <>
+          {/* Help Button */}
+          <button className="help-button" onClick={toggleHelp}>?</button>
+
+          {/* Help Menu */}
+          {showHelp && <HelpMenu onClose={toggleHelp} />}
+
+          {!gamePaused && (
+            <>
+              <div className="stylized-container">
+                <img src={stylizedImage} alt="Stylized Result" />
+              </div>
+              <div className="game-phrase">Spot the Style and Content!</div>
+
+              {/* Timer bar */}
+              <div className="timer-container">
+                <div
+                  className="timer-bar"
+                  style={{
+                    height: `${(timeRemaining / 30) * 100}%`,
+                    backgroundColor: getTimerColor()
+                  }}
+                />
+                <div className="timer-text">{timeRemaining}</div>
+              </div>
+
+              <div className="options-container">
+                <div className="image-grid">
+                  {shuffledOptions.map((option, index) => (
+                    <img
+                      key={index}
+                      src={option}
+                      alt={`Option ${index + 1}`}
+                      className={`option-image ${selectedImages.includes(option) ? "selected" : ""}`}
+                      onClick={() => handleImageClick(option)}
+                    />
+                  ))}
+                </div>
+              </div>
+              {message && (
+                <div className="message">
+                  {message}
+                  {isNextRoundEnabled && (
+                    <button className="show-me-how" onClick={handleShowMeHow}>
+                      Show Me How
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {showVisualization && (
+                <ProcessVisualization
+                  contentImage={correctContent}
+                  styleImage={correctStyle}
+                  stylizedImage={stylizedImage}
+                  processImages={processImages}
+                  onClose={closeVisualization}
+                />
+              )}
+
+              <button
+                className={`next-round-button ${isNextRoundEnabled ? "active" : ""}`}
+                onClick={handleNextRound}
+                disabled={!isNextRoundEnabled}
+              >
+                Next Round
+              </button>
+            </>
+          )}
+
+        </>
       )}
     </div>
   );
