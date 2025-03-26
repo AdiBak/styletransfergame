@@ -8,15 +8,18 @@ Test your ability to recognize styles, challenge yourself with a timer-based sco
 ---
 
 ## 🌟 Inspiration  
-I wanted to create a **fun and engaging way** to introduce people to **style transfer**—a fascinating AI technique that blends artistic styles with real images.  
-By turning it into a game, players can **learn about AI while having fun!** The scoring system makes it **casual and enjoyable**, while the visual animations keep it **engaging**.  
+
+I have played around with Google's Arts and Culture games for a while now, and what fascinates me about them is that they often teach you something in a fun way. 
+Recently, while taking a computer vision course, I was introduced to the concept of neural style transfer—a fascinating technique that blends different images to create an artistic result. This immediately caught my attention, and I thought:
+💡 "What if I could make a game around this?"
+I remembered Google's games, like Say What You See, Un-Dough, and Odd One Out, where you or the system had to _guess_ something based on clues. I became inspired to craft an idea for a "reverse" style transfer game — where the player must guess the original content and style images that created a given stylized output, and teach a thing or two along the way. 
 
 ---
 
 ## 🎨 What is Style Transfer?  
-**Neural Style Transfer (NST)** is a deep learning technique that **applies the artistic style of one image to another**.  
+**Neural Style Transfer (NST)** is a deep learning technique that applies the artistic style of one image to another image.  
 
-For example, an AI can take a **mountain landscape** and transform it into a **Van Gogh-style painting!**  
+For example, an AI can take a mountain landscape and transform it into a Van Gogh-style painting!
 
 | **Content Image** | **Style Image** | **Stylized Output** |
 |------------------|---------------|-------------------|
@@ -29,10 +32,8 @@ For example, an AI can take a **mountain landscape** and transform it into a **V
 ---
 
 ## 💻 Tech Stack  
-🔹 **Frontend:** [React.js](https://react.dev) (for dynamic UI).  
-🔹 **State Management:** React Hooks (`useState`, `useEffect`).  
-🔹 **Animations & Effects:** CSS Keyframes, `canvas-confetti`.  
-🔹 **Game Logic:** JavaScript (Shuffling, Timer, Score Tracking).  
+🔹 **Frontend**: React.js, CSS
+🔹 **Style Transfer AI**: [crowsonkb's Pytorch Model](https://github.com/crowsonkb/style-transfer-pytorch)
 🔹 **Data Source:** JSON file mapping **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
 
 ---
