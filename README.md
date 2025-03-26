@@ -9,9 +9,9 @@ Test your ability to recognize styles, challenge yourself with a timer-based sco
 
 ## 🌟 Inspiration  
 
-I have played around with Google's Arts and Culture games for a while now, and what fascinates me about them is that they often teach you something in a fun way. 
-Recently, while taking a computer vision course, I was introduced to the concept of neural style transfer—a fascinating technique that blends different images to create an artistic result. This immediately caught my attention, and I thought:
-💡 "What if I could make a game around this?"
+I have played around with Google's Arts and Culture games for a while now, and what fascinates me about them is that they often teach you something in a fun way. \
+Recently, while taking a computer vision course, I was introduced to the concept of neural style transfer—a fascinating technique that blends different images to create an artistic result. This immediately caught my attention, and I thought: \
+💡 "What if I could make a game around this?" \
 I remembered Google's games, like Say What You See, Un-Dough, and Odd One Out, where you or the system had to _guess_ something based on clues. I became inspired to craft an idea for a "reverse" style transfer game — where the player must guess the original content and style images that created a given stylized output, and teach a thing or two along the way. 
 
 ---
