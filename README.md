@@ -7,6 +7,28 @@ Test your ability to recognize styles, challenge yourself with a timer-based sco
 
 ---
 
+## 🎮 How to Play  
+1️⃣ **Watch the intro video** (or skip it) to understand style transfer.  
+2️⃣ **Observe the stylized image** (left side of screen).  
+3️⃣ **Select two images** (from 4 choices) that represent the **original content & style**.  
+4️⃣ **Earn points based on your speed!**  
+5️⃣ **Use the "?" Help button** anytime to pause and learn more.  
+
+💡 **Hint:** Pay close attention to textures & colors to find the correct match!  
+
+Your score is based on how quickly you guess correctly:  
+- **< 10 seconds → +100 points**  
+- **10 - 20 seconds → +50 points**  
+- **20 - 30 seconds → +20 points**  
+
+Total points are displayed at the **bottom left** of the screen. A floating `+100`, `+50`, or `+20` appears when points are added.  
+
+Demo:
+
+https://github.com/user-attachments/assets/aaca7caa-00a5-4ccd-accd-8e0ff400f985
+
+---
+
 ## 🌟 Inspiration  
 
 I've always loved playing games, and developing them. I've particularly enjoyed Google's Arts and Culture games for a while now, and what fascinates me about them is that they often teach you something in a fun way. \
@@ -68,24 +90,6 @@ It all started with
 🔹 **Frontend**: React.js, CSS \
 🔹 **Style Transfer AI**: [crowsonkb's Pytorch Model](https://github.com/crowsonkb/style-transfer-pytorch) \
 🔹 **Data Source:** JSON file mapping **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
-
----
-
-## 🎮 How to Play  
-1️⃣ **Watch the intro video** (or skip it) to understand style transfer.  
-2️⃣ **Observe the stylized image** (left side of screen).  
-3️⃣ **Select two images** (from 4 choices) that represent the **original content & style**.  
-4️⃣ **Earn points based on your speed!**  
-5️⃣ **Use the "?" Help button** anytime to pause and learn more.  
-
-💡 **Hint:** Pay close attention to textures & colors to find the correct match!  
-
-Your score is based on how quickly you guess correctly:  
-- **< 10 seconds → +100 points**  
-- **10 - 20 seconds → +50 points**  
-- **20 - 30 seconds → +20 points**  
-
-Total points are displayed at the **bottom left** of the screen. A floating `+100`, `+50`, or `+20` appears when points are added.  
 
 ---
 
