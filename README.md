@@ -3,8 +3,6 @@
 An interactive game where you **identify the content and style images** used to create a **stylized image** via **neural style transfer**.  
 Test your ability to recognize styles, challenge yourself with a timer-based scoring system, and enjoy a fun, educational experience in AI-powered art!  
 
-![Game Demo](public/demo-play.mp4) 
-
 ---
 
 ## 🎮 How to Play  
