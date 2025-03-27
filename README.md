@@ -3,6 +3,8 @@
 An interactive game where you **identify the content and style images** used to create a **stylized image** via **neural style transfer**.  
 Test your ability to recognize styles, challenge yourself with a timer-based scoring system, and enjoy a fun, educational experience in AI-powered art!  
 
+![Game Demo](public/demo-play.mp4) 
+
 ---
 
 ## 🌟 Inspiration  
@@ -84,8 +86,6 @@ Your score is based on how quickly you guess correctly:
 - **20 - 30 seconds → +20 points**  
 
 Total points are displayed at the **bottom left** of the screen. A floating `+100`, `+50`, or `+20` appears when points are added.  
-
-Demo:
 
 ---
 
