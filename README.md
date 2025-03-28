@@ -80,16 +80,30 @@ That's how Style Transfer works! For more info, you can simply search it up, or 
 ---
 
 ## ⚙️ Development Process  
-The first step was to explore datasets of images I could pass to the Style Transfer model. I browsed for paintings, landscapes, and cities, three categories I think have been commonly used in Style Transfer programs and could be utilized in this game. A few Google searches led me to Kaggle, where I found what I desired - useful, relevant, and quality datasets containing thousands of painting, landscape, and (AI-generated) city images. I downloaded the data, totaling about 1.1 GB, and proceeded to the next step.
 
-Often using two random images from the data I had, I experimented with various models implementing Style Transfer including [TensorFlow's](https://www.tensorflow.org/tutorials/generative/style_transfer) and [Pytorch's](https://pytorch.org/tutorials/advanced/neural_style_tutorial.html), as well as open-source implementations (which frequently utilized PyTorch) like [neural-style-transfer](https://pypi.org/project/neural-style-transfer/), [pastiche](https://pypi.org/project/pastiche/), [gordicaleksa's](https://github.com/gordicaleksa/pytorch-neural-style-transfer), and [crowsonkb's](https://github.com/crowsonkb/style-transfer-pytorch). I noticed crowsonkb's program largely produced a great blend of the content and style images, to a better degree than the other models I tinkered with, so I decided to use it. Plus, it provided a handy Jupyter notebook in which I could experiment.
+### Data Exploration and Model Selection
 
-Now, the question arose: _How do I make the game?_ \
-I knew I wanted to make the player guess the original pair of images forming the output, so I had to gather a bunch of images as the 'options' to choose from and generate stylized images. In addition, I realized I'd have to obtain URLs for images since there would have to be a front-end that renders images based on their URLs (saving files locally would've taken up lots of space). The first thing that came to mind is Cloudinary, a popular content delivery network that could generate URLs for assets via an API. So I got to work, modifying the Style Transfer model in the following steps: \
-- I opened the model's provided Jupyter notebook in Kaggle, which afforded greater GPU runtime availability compared to Google Colab
-- I imported the Cloudinary Python library, which served an easy-to-use Python SDK 
-- I overwrote the model's `cli.py` file, containing the command-line interface (CLI) tool serving as the main execution of the Style Transfer program, doing the following:
-  - I added a method to upload an image (to Cloudinary) and get its URL. Predictably, this would help 
+The first step involved finding suitable image datasets for the style transfer model. I focused on paintings, landscapes, and cityscapes, as these categories are commonly used in style transfer and well-suited for the game concept. After searching on Kaggle, I found relevant, high-quality datasets containing thousands of images in these categories, totaling approximately 1.1 GB.
+
+Next, I experimented with various style transfer implementations, including [TensorFlow's](https://www.tensorflow.org/tutorials/generative/style_transfer) and [Pytorch's](https://pytorch.org/tutorials/advanced/neural_style_tutorial.html) tutorials, as well as open-source projects like [neural-style-transfer](https://pypi.org/project/neural-style-transfer/), [pastiche](https://pypi.org/project/pastiche/), [gordicaleksa's](https://github.com/gordicaleksa/pytorch-neural-style-transfer), and [crowsonkb's](https://github.com/crowsonkb/style-transfer-pytorch). Crowsonkb's PyTorch-based implementation produced the most visually appealing blend of content and style, so I chose it for this project. The provided Jupyter Notebook also made experimentation easier.
+
+### Game Design and Implementation
+
+The core game concept is for the player to guess the original content and style images that were used to create the stylized output. Each round presents four image options: two correct (content and style) and two incorrect.
+
+To implement this, I needed a way to generate stylized images and store them along with their source images. Because of storage limitations for the web front-end, I needed image URLs instead of saving images locally. I chose Cloudinary, a content delivery network that provides image URLs via an API. I then modified the style transfer model's cli.py file (the main command-line interface) as follows:
+
+- Image Upload and URL Retrieval: Added a function to upload images to Cloudinary and retrieve their URLs for use in the front-end.
+
+- Iteration Image Tracking: Added an iteration_image_urls attribute to the Callback class to store the URLs of the intermediate images generated during each iteration of the style transfer process. This allows for creating a visual "animation" of the style transfer.
+
+- Modified save_image(): The save_image() function now saves the image to Cloudinary and appends the resulting URL to the iteration_image_urls list.
+
+- Added Incorrect Image Arguments: Added command-line arguments for the two incorrect image options to be displayed in the game.
+
+- write_to_json() Method: Created a write_to_json() function that retrieves the Cloudinary URLs for the content, style, and incorrect image options. It then organizes this data (content URL, style URL, incorrect option URLs, and the list of iteration_image_urls) into a dictionary, and saves this dictionary to a cloud-based JSON "basket" using GetPantry. This JSON file stores all the data needed for each round of the game. This function is called at the end of the script once the final image is created.
+
+To generate data for the game, I created helper functions in the Jupyter Notebook to randomly select four unique images from the image datasets (content, style, and two incorrect options). Finally, I ran the modified style transfer script 150 times in a loop using the command line, resulting in a large JSON file containing the data for 150 game rounds.
 
 ---
 
