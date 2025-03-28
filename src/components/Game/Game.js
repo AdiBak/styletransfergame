@@ -402,22 +402,19 @@ const Game = () => {
  
   // shake images - for incorrect guessed pair
   const shakeImages = (images) => {
-    /*document.querySelectorAll(".option-image").forEach((img) => {
-      if (images.includes(img.src)) {
-        img.classList.add("shake");    
-      }
-    });*/
     highlightImages(images, "shake"); // add shake class
   };
 
+  // reset borders on images
   const resetBorders = () => {
     document.querySelectorAll(".option-image").forEach((img) => {
-      img.classList.remove("correct", "incorrect", "shake", "fade-out");
+      img.classList.remove("correct", "incorrect", "shake", "fade-out");  // remove all classes
     });
-    setSelectedImages([]);
-    setMessage("");
+    setSelectedImages([]);    // empty selected images
+    setMessage("");           // empty message
   };
 
+  // trigger confetti - just a fun effect for correct guesses
   const triggerConfetti = () => {
     confetti({
       particleCount: 150,
@@ -429,21 +426,26 @@ const Game = () => {
 
   return (
     <div className="game-container">
+      {/* if the intro video is set to show, show the intro video */}
       {showIntro ? (
         <IntroVideo onSkip={startGame} onVideoEnd={startGame} />
       ) : (
         <>
+          {/* else, show the game UI*/}
+
           {/* Help Button */}
           <button className="help-button" onClick={toggleHelp}>?</button>
 
           {/* Help Menu */}
           {showHelp && <HelpMenu onClose={toggleHelp} />}
 
+
           {!gamePaused && (
             <>
               <div className="stylized-container">
                 <img src={stylizedImage} alt="Stylized Result" />
               </div>
+              
               <div className="game-phrase">Spot the Style and Content!</div>
 
               {/* Timer bar */}
