@@ -12,7 +12,7 @@ Test your ability to recognize styles, challenge yourself with a timer-based sco
 4️⃣ **Earn points based on your speed!**  
 5️⃣ **Use the "?" Help button** anytime to pause and learn more.  
 
-💡 **Hint:** Pay close attention to textures & colors to find the correct match!  
+💡 **Hint:** Pay close attention to shape, texture & color to find the correct match!  
 
 Your score is based on how quickly you guess correctly:  
 - **< 10 seconds → +100 points**  
@@ -80,15 +80,25 @@ That's how Style Transfer works! For more info, you can simply search it up, or 
 ---
 
 ## ⚙️ Development Process  
-It all started with 
+The first step was to explore datasets of images I could pass to the Style Transfer model. I browsed for paintings, landscapes, and cities, three categories I think have been commonly used in Style Transfer programs and could be utilized in this game. A few Google searches led me to Kaggle, where I found what I desired - useful, relevant, and quality datasets containing thousands of painting, landscape, and (AI-generated) city images. I downloaded the data, totaling about 1.1 GB, and proceeded to the next step.
+
+Often using two random images from the data I had, I experimented with various models implementing Style Transfer including [TensorFlow's](https://www.tensorflow.org/tutorials/generative/style_transfer) and [Pytorch's](https://pytorch.org/tutorials/advanced/neural_style_tutorial.html), as well as open-source implementations (which frequently utilized PyTorch) like [neural-style-transfer](https://pypi.org/project/neural-style-transfer/), [pastiche](https://pypi.org/project/pastiche/), [gordicaleksa's](https://github.com/gordicaleksa/pytorch-neural-style-transfer), and [crowsonkb's](https://github.com/crowsonkb/style-transfer-pytorch). I noticed crowsonkb's program largely produced a great blend of the content and style images, to a better degree than the other models I tinkered with, so I decided to use it. Plus, it provided a handy Jupyter notebook in which I could experiment.
+
+Now, the question arose: _How do I make the game?_ \
+I knew I wanted to make the player guess the original pair of images forming the output, so I had to gather a bunch of images as the 'options' to choose from and generate stylized images. In addition, I realized I'd have to obtain URLs for images since there would have to be a front-end that renders images based on their URLs (saving files locally would've taken up lots of space). The first thing that came to mind is Cloudinary, a popular content delivery network that could generate URLs for assets via an API. So I got to work, modifying the Style Transfer model in the following steps: \
+- I opened the model's provided Jupyter notebook in Kaggle, which afforded greater GPU runtime availability compared to Google Colab
+- I imported the Cloudinary Python library, which served an easy-to-use Python SDK 
+- I overwrote the model's `cli.py` file, containing the command-line interface (CLI) tool serving as the main execution of the Style Transfer program, doing the following:
+  - I added a method to upload an image (to Cloudinary) and get its URL. Predictably, this would help 
 
 ---
 
 ## 💻 Tech Stack  
 🔹 **Frontend**: React.js, CSS \
 🔹 **Style Transfer AI**: [crowsonkb's Pytorch Model](https://github.com/crowsonkb/style-transfer-pytorch) \
-🔹 **Data Source:** JSON file mapping **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
-
+🔹 **Data Source:** JSON file mapping URLs of **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
+🔹 **JSON Bucket:** [getpantry.cloud](https://getpantry.cloud) (generous free tier!)
+🔹 **Image CDN:** Cloudinary
 ---
 
 ## 📜 Credits  
