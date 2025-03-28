@@ -183,48 +183,53 @@ const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, process
 };
 
 const Game = () => {
-  const [showIntro, setShowIntro] = useState(true);
-  const [gameStarted, setGameStarted] = useState(false);
-  const [stylizedImage, setStylizedImage] = useState("");
-  const [shuffledOptions, setShuffledOptions] = useState([]);
-  const [correctContent, setCorrectContent] = useState("");
-  const [correctStyle, setCorrectStyle] = useState("");
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [showVisualization, setShowVisualization] = useState(false);
-  const [processImages, setProcessImages] = useState([]);
-  const [message, setMessage] = useState("");
-  const [isNextRoundEnabled, setIsNextRoundEnabled] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
-  const [gamePaused, setGamePaused] = useState(false);
-  const [score, setScore] = useState(0);
-  const [floatingPoints, setFloatingPoints] = useState(null);
-
-  // Timer state variables
-  const [timeRemaining, setTimeRemaining] = useState(30);
-  const [timerActive, setTimerActive] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);                       // intro video
+  const [gameStarted, setGameStarted] = useState(false);                  // game started flag (prevents timer from running during intro video)
+  
+  const [stylizedImage, setStylizedImage] = useState("");                 // stylized (result) image
+  const [shuffledOptions, setShuffledOptions] = useState([]);             // image options to choose from
+  const [correctContent, setCorrectContent] = useState("");               // correct content image
+  const [correctStyle, setCorrectStyle] = useState("");                   // correct style image
+  const [selectedImages, setSelectedImages] = useState([]);               // tracks selected images
+  
+  const [showVisualization, setShowVisualization] = useState(false);      // visualization window (to show how result formed)
+  const [processImages, setProcessImages] = useState([]);                 // images to show for visualization
+  
+  const [message, setMessage] = useState("");                             // message shown after user guesses 2 images
+  
+  const [isNextRoundEnabled, setIsNextRoundEnabled] = useState(false);    // next round activation
+  
+  const [showHelp, setShowHelp] = useState(false);                        // help menu 
+  const [gamePaused, setGamePaused] = useState(false);                    // game paused 
+  
+  const [score, setScore] = useState(0);                                  // score 
+  const [floatingPoints, setFloatingPoints] = useState(null);             // floating text for score gain
+  
+  const [timeRemaining, setTimeRemaining] = useState(30);                 // time left (30 secs)
+  const [timerActive, setTimerActive] = useState(false);                  // timer activation
   const timerRef = useRef(null);
 
   const fetchData = async () => {
     try {
-      const response = await fetch("image_relations.json");
-      const data = await response.json();
+      const response = await fetch("image_relations.json");      // fetch data from JSON
+      const data = await response.json(); 
 
-      const keys = Object.keys(data);
-      const randomIndex = Math.floor(Math.random() * keys.length);
-      const selectedEntry = data[keys[randomIndex]];
+      const keys = Object.keys(data);   // get keys (stylized image URLs)
+      const randomIndex = Math.floor(Math.random() * keys.length);  // get random index in dictionary
+      const selectedEntry = data[keys[randomIndex]];                // get random entry from dictionary (random data for each round)
 
-      const [options, processImages] = selectedEntry;
-      const [contentUrl, styleUrl, randomOption1, randomOption2] = options;
+      const [options, processImages] = selectedEntry;               // set value (image options + iteration images) to selected round entry
+      const [contentUrl, styleUrl, randomOption1, randomOption2] = options;    // set corresponding image options (1st = content, 2nd = style, 3rd&4th = incorrect options)
 
-      setStylizedImage(keys[randomIndex]);
-      setCorrectContent(contentUrl);
-      setCorrectStyle(styleUrl);
-      setShuffledOptions(shuffle([contentUrl, styleUrl, randomOption1, randomOption2]));
-      setSelectedImages([]);
-      setProcessImages(processImages[0]);
-      setMessage("");
-      setIsNextRoundEnabled(false);
-      resetBorders();
+      setStylizedImage(keys[randomIndex]);     // set stylized result to corresponding key in dictionary
+      setCorrectContent(contentUrl);           // set correct content
+      setCorrectStyle(styleUrl);               // set correct style
+      setShuffledOptions(shuffle([contentUrl, styleUrl, randomOption1, randomOption2]));   // shuffle options
+      setSelectedImages([]);                     // selected images initially empty
+      setProcessImages(processImages[0]);        // set iteration images to be the first iteration image
+      setMessage("");                            // feedback message initially empty
+      setIsNextRoundEnabled(false);              // next round is not enabled (current round should play first)
+      resetBorders();                            // reset image borders (for selections)
 
       // Reset and start timer
       setTimeRemaining(30);
@@ -235,6 +240,7 @@ const Game = () => {
     }
   };
 
+  // fetch data effect
   useEffect(() => {
     fetchData();
 
@@ -244,6 +250,7 @@ const Game = () => {
     };
   }, []);
 
+  // start game
   const startGame = () => {
     setShowIntro(false);
     setGameStarted(true);  // Game officially starts
@@ -252,45 +259,47 @@ const Game = () => {
   };
 
   const toggleHelp = () => {
-    setShowHelp(!showHelp);
-    setGamePaused(!gamePaused);
+    setShowHelp(!showHelp);       // toggle help menu display
+    setGamePaused(!gamePaused);   // toggle game paused
   };
 
-  // timer
+  // timer effect
   useEffect(() => {
+    // if the game started, timer's active, time left > 0 and game's not paused
     if (gameStarted && timerActive && timeRemaining > 0 && !gamePaused) {
       timerRef.current = setInterval(() => {
-        setTimeRemaining(prevTime => prevTime - 1);
+        setTimeRemaining(prevTime => prevTime - 1);   // decrement time left
       }, 1000);
-    } else if (timeRemaining === 0) {
+    } else if (timeRemaining === 0) {   // if time's up, handle time up
       handleTimeUp();
     }
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [gameStarted, timerActive, timeRemaining, gamePaused]); // 🔹 Now depends on `gamePaused`
+  }, [gameStarted, timerActive, timeRemaining, gamePaused]);
 
 
   // Calculate timer color based on time remaining
   const getTimerColor = () => {
-    if (timeRemaining > 20) return '#28a745'; // Green
-    if (timeRemaining > 10) return '#ffc107'; // Yellow
-    return '#dc3545'; // Red
+    if (timeRemaining > 20) return '#28a745'; // Green - ample time left
+    if (timeRemaining > 10) return '#ffc107'; // Yellow - better hurry
+    return '#dc3545'; // Red - time nearly up
   };
 
   // Handle time up
   const handleTimeUp = () => {
-    setTimerActive(false);
-    setIsNextRoundEnabled(true);
+    setTimerActive(false);          // deactivate timer
+    setIsNextRoundEnabled(true);    // activate next round
 
     // Highlight correct answers
     const correctPair = [correctContent, correctStyle];
     highlightCorrectAnswers(correctPair);
 
-    setMessage("Time's up! These are the correct options.");
+    setMessage("Time's up! These are the correct options.");  // set message
   };
 
+  // shuffle method - shuffles array with Durstenfeld algorithm
   const shuffle = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -299,18 +308,27 @@ const Game = () => {
     return array;
   };
 
+  // handle image selection method
   const handleImageClick = (option) => {
+    // if the timer's up, or the image is already selected, or the next round is activated (current round over),
+    // don't do anything
     if (!timerActive || selectedImages.includes(option) || isNextRoundEnabled) return;
 
+    // add newly selected image in selected images 
     const newSelectedImages = [...selectedImages, option];
-    setSelectedImages(newSelectedImages);
+    setSelectedImages(newSelectedImages);  // set selected images
 
-    if (newSelectedImages.length === 2) {
+    // if the user chooses 2 images, check the guess
+    if (newSelectedImages.length === 2) { 
       setTimeout(() => checkGuess(newSelectedImages), 200); // Small delay to ensure the selection effect appears
     }
   };
 
+  // check guess method
   const checkGuess = (guessedPair) => {
+    // correctness = if the user guess includes content and style
+    // (currently not checking if content was chosen first, then style chosen second, in order,
+    // just for ease of play)
     const isCorrect =
       guessedPair.includes(correctContent) && guessedPair.includes(correctStyle);
 
@@ -320,68 +338,76 @@ const Game = () => {
     });
 
     if (isCorrect) {
-      highlightImages(guessedPair, "correct");
-      setMessage("Correct! You've identified both the content and style images.");
-      triggerConfetti();
-      setIsNextRoundEnabled(true);
-      setTimerActive(false); // Stop the timer
+      highlightImages(guessedPair, "correct");  // highlight correct images
+      setMessage("Correct! You've identified both the content and style images.");  // set message
+      triggerConfetti();             // activate confetti
+      setIsNextRoundEnabled(true);   // activate next round
+      setTimerActive(false);         // Stop the timer
 
-      // Calculate points based on time left
+      // Calculate points based on time left - quicker guesses earn more points
       let pointsEarned = 0;
       if (timeRemaining > 20) pointsEarned = 100;
       else if (timeRemaining > 10) pointsEarned = 50;
       else pointsEarned = 20;
 
-      setScore(prevScore => prevScore + pointsEarned);
-      setFloatingPoints(`+${pointsEarned}`);
+      setScore(prevScore => prevScore + pointsEarned);  // update score
+      setFloatingPoints(`+${pointsEarned}`);            // activate floating score add text
 
-      // Remove floating points text after a short delay
+      // Remove floating text after a short delay
       setTimeout(() => setFloatingPoints(null), 1000);
 
-    } else {
-      highlightImages(guessedPair, "incorrect");
-      shakeImages(guessedPair);
-      setMessage("Incorrect. Try again!");
-      setTimeout(() => resetBorders(), 1000);
+    } else {  // if the guessed pair was incorrect
+
+      highlightImages(guessedPair, "incorrect");   // highlight incorrect
+      shakeImages(guessedPair);                    // shake the guessed images 
+      setMessage("Incorrect. Try again!");         // set message
+      setTimeout(() => resetBorders(), 1000);      // reset border on guessed pair
     }
   };
 
+  // highlight correct answers (for after time's up)
   const highlightCorrectAnswers = (correctPair) => {
     document.querySelectorAll(".option-image").forEach((img) => {
       if (correctPair.includes(img.src)) {
-        img.classList.add("correct");
+        img.classList.add("correct");      // add correct class to correct pair
       } else {
-        img.classList.add("fade-out");
+        img.classList.add("fade-out");     // fade out other (incorrect) options a bit
       }
     });
   };
 
+  // handle click on show me how - activate visualization window
   const handleShowMeHow = () => {
     setShowVisualization(true);
   };
 
+  // handle close on visualization window - deactivate visualization
   const closeVisualization = () => {
     setShowVisualization(false);
   };
 
+  // handle next round - fetch fresh data
   const handleNextRound = () => {
     fetchData();
   };
 
+  // highlight images based on class name
   const highlightImages = (images, className) => {
     document.querySelectorAll(".option-image").forEach((img) => {
       if (images.includes(img.src)) {
-        img.classList.add(className);
+        img.classList.add(className);   // add class name to image (CSS will handle the rest)
       }
     });
   };
-
+ 
+  // shake images - for incorrect guessed pair
   const shakeImages = (images) => {
-    document.querySelectorAll(".option-image").forEach((img) => {
+    /*document.querySelectorAll(".option-image").forEach((img) => {
       if (images.includes(img.src)) {
-        img.classList.add("shake");
+        img.classList.add("shake");    
       }
-    });
+    });*/
+    highlightImages(images, "shake"); // add shake class
   };
 
   const resetBorders = () => {
