@@ -1,6 +1,7 @@
 // Game.js
 import React, { useState, useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
+import { FaGithub } from "react-icons/fa"; // Import GitHub icon
 import "./Game.css";
 
 const IntroVideo = ({ onSkip, onVideoEnd }) => {
@@ -445,7 +446,7 @@ const Game = () => {
               <div className="stylized-container">
                 <img src={stylizedImage} alt="Stylized Result" />
               </div>
-              
+
               <div className="game-phrase">Spot the Style and Content!</div>
 
               {/* Timer bar */}
@@ -511,6 +512,15 @@ const Game = () => {
             </>
           )}
 
+          {/* GitHub Icon */}
+          <a
+            href="https://github.com/AdiBak/styletransfergame/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="github-icon"
+          >
+            <FaGithub />
+          </a>
         </>
       )}
     </div>

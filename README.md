@@ -6,7 +6,7 @@ Test your ability to recognize styles, challenge yourself with a timer-based sco
 ---
 
 ## 🎮 How to Play  
-1️⃣ **Watch the intro video** (or skip it) to understand style transfer.  
+1️⃣ **Watch the intro video** (or skip it) to understand style transfer. I recommend to pause it during the examples! 
 2️⃣ **Observe the stylized image** (left side of screen).  
 3️⃣ **Select two images** (from 4 choices) that represent the **original content & style**.  
 4️⃣ **Earn points based on your speed!**  
