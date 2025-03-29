@@ -146,6 +146,10 @@ To develop the final version, I chose ReactJS because of its component-based str
 
 With these features in place, the game became intuitive, interactive, and educational. I think the combination of visual feedback, scoring mechanics, a timer, and helpful explanations make for an engaging experience while subtly teaching players about style transfer.
 
+## Things to Add
+
+- Perhaps some music while the user plays
+
 ---
 
 ## 💻 Tech Stack  
