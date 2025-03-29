@@ -125,6 +125,10 @@ To develop the final version, I chose ReactJS because of its component-based str
     - If they're incorrect, briefly shake and turn red before resetting. 
     - In either case, a message is displayed after guessing that says if the guess was correct or not.
 
+- Visualizing the Process: To help players understand style transfer as a stepwise transformation, I included a process visualization feature. 
+  - After a correct guess, the user can click to see how the stylized image was made.
+  - The game briefly displays intermediate stylization steps between the content and final stylized image. These frames appear in a smooth transition, giving a clear visual of how the style is progressively applied. This adds an educational layer to the game while making correct guesses feel more rewarding.
+
 - Scoring: I introduced a dynamic scoring system based on how quickly correct guesses were made, with the time ranges being 0-10 seconds, 10-20 seconds, and 20-30 seconds and the awarded points being 100, 50, and 20, respectively. I could've further granularized the time intervals for specific amounts of points, but I thought this would complicate things. However, green floating text briefly shows the points acquired after a correct guess, which is a fun little animation. 
 
 - Timer: To encourage faster decision-making, I implemented a countdown timer as a vertical bar positioned between the stylized image and the image option grid, keeping it well in the user's focus. The timer starts at 30 seconds per round and visually depletes with time, and I set its color to reflect the urgency: green when there's 20-30 seconds left, yellow when there's 10-20 seconds left, and red for the final 10 seconds. After time runs out, the correct guesses are highlighted with a message saying as such. 
@@ -146,8 +150,8 @@ With these features in place, the game became intuitive, interactive, and educat
 
 ## 💻 Tech Stack  
 
-- **Frontend**: React.js, CSS \
-- **Style Transfer AI**: [crowsonkb's Pytorch Model](https://github.com/crowsonkb/style-transfer-pytorch) \
+- **Frontend**: React.js, CSS 
+- **Style Transfer AI**: [crowsonkb's Pytorch Model](https://github.com/crowsonkb/style-transfer-pytorch) 
 - **Data Source:** JSON file mapping URLs of **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
 - **JSON Bucket:** [getpantry.cloud](https://getpantry.cloud) (generous free tier!)
 - **Image CDN:** Cloudinary
