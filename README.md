@@ -5,12 +5,12 @@ Test your ability to recognize styles, challenge yourself with a timer-based sco
 
 ---
 
-## 🎮 How to Play  
-1️⃣ **Watch the intro video** (or skip it) to understand style transfer. I recommend to pause it during the examples! 
-2️⃣ **Observe the stylized image** (left side of screen).  
-3️⃣ **Select two images** (from 4 choices) that represent the **original content & style**.  
-4️⃣ **Earn points based on your speed!**  
-5️⃣ **Use the "?" Help button** anytime to pause and learn more.  
+## 🎮 How to Play
+1️⃣ Click the Vercel link to play and then watch the intro video (or skip it) to understand style transfer. I recommend pausing it during the examples!
+2️⃣ Observe the stylized image (left side of screen).
+3️⃣ Select two images (from 4 choices) that represent the original content & style.
+4️⃣ Earn points based on your speed!
+5️⃣ Use the "?" Help button anytime to pause and learn more.
 
 💡 **Hint:** Pay close attention to shape, texture & color to find the correct match!  
 
@@ -159,6 +159,7 @@ With these features in place, the game became intuitive, interactive, and educat
 - **Data Source:** JSON file mapping URLs of **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
 - **JSON Bucket:** [getpantry.cloud](https://getpantry.cloud) 
 - **Image CDN:** [Cloudinary](https://cloudinary.com/)
+- **Deployment:** [Vercel](https://vercel.com/)
 ---
 
 ## 📜 Credits  
