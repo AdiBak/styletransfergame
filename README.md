@@ -10,7 +10,7 @@ Test your ability to recognize styles, challenge yourself with a timer-based sco
 2️⃣ Observe the stylized image (left side of screen). \
 3️⃣ Select two images (from 4 choices) that represent the original content & style. \
 4️⃣ Earn points based on your speed! \
-5️⃣ Use the "?" Help button anytime to pause and learn more. \
+5️⃣ Use the "?" Help button anytime to pause and learn more. 
 
 💡 **Hint:** Pay close attention to shape, texture & color to find the correct match!  
 
