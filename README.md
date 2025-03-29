@@ -146,11 +146,11 @@ With these features in place, the game became intuitive, interactive, and educat
 
 ## 💻 Tech Stack  
 
-🔹 **Frontend**: React.js, CSS \
-🔹 **Style Transfer AI**: [crowsonkb's Pytorch Model](https://github.com/crowsonkb/style-transfer-pytorch) \
-🔹 **Data Source:** JSON file mapping URLs of **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
-🔹 **JSON Bucket:** [getpantry.cloud](https://getpantry.cloud) (generous free tier!)
-🔹 **Image CDN:** Cloudinary
+- **Frontend**: React.js, CSS \
+- **Style Transfer AI**: [crowsonkb's Pytorch Model](https://github.com/crowsonkb/style-transfer-pytorch) \
+- **Data Source:** JSON file mapping URLs of **stylized images** to their **content & style pairs**, 2 random (incorrect) options, and images captured during the style transfer process.  
+- **JSON Bucket:** [getpantry.cloud](https://getpantry.cloud) (generous free tier!)
+- **Image CDN:** Cloudinary
 ---
 
 ## 📜 Credits  
