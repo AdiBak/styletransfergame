@@ -56,24 +56,39 @@ That's how Style Transfer looks. Pretty cool, right?
 
 ### How does it work?
 
-There are a few key steps that are generally involved in Style Transfer. Simply put:
+---
+This game uses a **neural style transfer (NST) model** implemented in **PyTorch**, based on the original work by Gatys et al. (2015). The core idea behind NST is to take two images—one **content image** (which provides the structure) and one **style image** (which provides the artistic texture)—and blend them together to create a new **stylized image** that retains the structure of the content while adopting the artistic patterns of the style.
 
-1. The images are carefully analyzed.
-- The model uses a pre-trained deep learning model (VGG-19), originally trained to recognize objects in photos.
-- The model extracts details about shapes and structure (content) as well as textures and colors (style).
+**Step-by-Step Process**
 
-2. Information about the content and style images is extracted.
-- The content image tells the model what should stay the same - this keeps the shapes and structure intact in the result.
-- The style image tells the model how to change the texture, adding brush strokes, patterns, and colors.
+1. **Feature Extraction with VGG-19**
+   * The model loads a **pre-trained VGG-19** convolutional neural network, a deep learning model originally trained on ImageNet.
+   * Instead of using VGG-19 for classification, we extract **feature maps** from different layers to capture both **content and style representations**.
 
-3. A new image is formed.
-- The model starts with a rough guess (often just noise) and gradually changes it using trial and error (a process known as _gradient descent_).
-- It compares the new image with the content and style images and tweaks it hundreds of times until the balance looks right!
+2. **Separating Content and Style**
+   * The **content image** is passed through the network, and activations from a deeper layer (like `conv4_2`) are extracted. These contain the structural details of the image.
+   * The **style image** is also passed through the network, but we extract activations from multiple layers (like `conv1_1`, `conv2_1`, etc.) to capture textures and artistic details.
+   * A **Gram matrix** is computed for each style layer, which represents spatial correlations between features and helps define the "style" of an image.
 
-The model I leveraged is optimized - it produces better results than the norm.
-- It uses a fancy Wasserstein distance (a way to compare images more accurately) to ensure textures look natural in the result.
-- It also applies a smoothing technique to prevent the image from looking too messy or noisy (essentially, averaging the results over multiple rounds).
-- It learns faster by keeping track of progress and progressively scaling the result at higher resolutions.
+3. **Optimization via Gradient Descent**
+   * The algorithm starts with a copy of the content image (or random noise) and **iteratively adjusts it** to minimize two losses:
+      * **Content loss**: Ensures the generated image remains structurally similar to the original content.
+      * **Style loss**: Ensures the textures and patterns match the style image's characteristics.
+   * These losses are optimized using an **Adam optimizer**, adjusting the pixel values in the stylized image to minimize the difference between the target and extracted features.
+
+4. **Progressive Scaling for Better Quality**
+   * Instead of directly generating a high-resolution output, the algorithm **gradually refines the stylized image at multiple scales** (starting from low-resolution and progressively increasing).
+   * This improves consistency and avoids artifacts that arise when working with high-resolution images from the start.
+
+5. **Final Output**
+   * After **500+ iterations**, the generated image reaches a visually appealing balance between content and style, resulting in a unique artistic transformation.
+
+**Enhancements Used in This Model**
+
+* **Pooling Adjustments:** Instead of only using max pooling, this implementation supports average and L2 pooling, affecting how textures are represented.
+* **Exponential Moving Average (EMA):** Used to stabilize the optimization process by averaging intermediate results, reducing noise.
+* **Regularization with TV Loss:** A **total variation (TV) loss** is applied to smooth out abrupt pixel transitions and reduce artifacts.
+* **Style Loss via Wasserstein-2 Distance:** This implementation improves upon the original NST by using a **Wasserstein-2 metric**, which more effectively matches the style features across different scales.
 
 That's how Style Transfer works! For more info, you can simply search it up, or read the articles posted in Credits which I found helpful.
 
