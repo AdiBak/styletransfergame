@@ -130,11 +130,11 @@ Early on, I also considered how to provide clear user feedback. Initially, I use
 
 To develop the final version, I chose ReactJS because of its component-based structure and state management capabilities, which helped efficiently track game progress, selections, and animations. The implementation process involved:
 
-- Fetching Game Data: The JSON file stored all game data, with each entry containing a stylized image, its source images, incorrect options, and style transfer iteration images. I set up React state variables to load and manage this data dynamically.
+- **Fetching Game Data**: The JSON file stored all game data, with each entry containing a stylized image, its source images, incorrect options, and style transfer iteration images. I set up React state variables to load and manage this data dynamically.
 
-- Structuring the UI: I created a responsive layout where the stylized image remained fixed on the left, while the image options dynamically updated in the grid on the right.
+- **Structuring the UI**: I created a responsive layout where the stylized image remained fixed on the left, while the image options dynamically updated in the grid on the right.
 
-- User Feedback: I wanted to make things responsive to user interaction. Primarily, the user would select images and be notified if the guess was correct or incorrect, so providing feedback involved:
+- **User Feedback**: I wanted to make things responsive to user interaction. Primarily, the user would select images and be notified if the guess was correct or incorrect, so providing feedback involved:
   - Hover Effects: Enlarged images slightly and thickened their borders. 
   - Selection Effects: Clicking an image applies a pressed-down animation and a blue border to confirm selection. This allows users to see what they chose.
   - Guess Checking: When two images are selected, the game checks if they were correct and lets the user know.
@@ -142,19 +142,19 @@ To develop the final version, I chose ReactJS because of its component-based str
     - If they're incorrect, briefly shake and turn red before resetting. 
     - In either case, a message is displayed after guessing that says if the guess was correct or not.
 
-- Visualizing the Process: To help players understand style transfer as a stepwise transformation, I included a process visualization feature. 
+- **Visualizing the Process**: To help players understand style transfer as a stepwise transformation, I included a process visualization feature. 
   - After a correct guess, the user can click to see how the stylized image was made.
   - The game briefly displays intermediate stylization steps between the content and final stylized image. These frames appear in a smooth transition, giving a clear visual of how the style is progressively applied. This adds an educational layer to the game while making correct guesses feel more rewarding.
 
-- Scoring: I introduced a dynamic scoring system based on how quickly correct guesses were made, with the time ranges being 0-10 seconds, 10-20 seconds, and 20-30 seconds and the awarded points being 100, 50, and 20, respectively. I could've further granularized the time intervals for specific amounts of points, but I thought this would complicate things. However, green floating text briefly shows the points acquired after a correct guess, which is a fun little animation. 
+- **Scoring**: I introduced a dynamic scoring system based on how quickly correct guesses were made, with the time ranges being 0-10 seconds, 10-20 seconds, and 20-30 seconds and the awarded points being 100, 50, and 20, respectively. I could've further granularized the time intervals for specific amounts of points, but I thought this would complicate things. However, green floating text briefly shows the points acquired after a correct guess, which is a fun little animation. 
 
-- Timer: To encourage faster decision-making, I implemented a countdown timer as a vertical bar positioned between the stylized image and the image option grid, keeping it well in the user's focus. The timer starts at 30 seconds per round and visually depletes with time, and I set its color to reflect the urgency: green when there's 20-30 seconds left, yellow when there's 10-20 seconds left, and red for the final 10 seconds. After time runs out, the correct guesses are highlighted with a message saying as such. 
+- **Timer**: To encourage faster decision-making, I implemented a countdown timer as a vertical bar positioned between the stylized image and the image option grid, keeping it well in the user's focus. The timer starts at 30 seconds per round and visually depletes with time, and I set its color to reflect the urgency: green when there's 20-30 seconds left, yellow when there's 10-20 seconds left, and red for the final 10 seconds. After time runs out, the correct guesses are highlighted with a message saying as such. 
 
-- Introduction Video: Since many players may not be familiar with style transfer, I created an intro video that explains the concept before gameplay. 
+- **Introduction Video**: Since many players may not be familiar with style transfer, I created an intro video that explains the concept before gameplay. 
   - Essentially, I crafted a PowerPoint presentation that depicted what it is, some examples of it, and the game's basic rules, and recorded the slideshow. 
   - I embedded this video in the code, allowing users to close it to skip to the game, or watch it entirely before a Play button appears.  
 
-- Help Menu: To provide quick access to instructions, I added a Help Menu, accessible via a question mark button at the top right. 
+- **Help Menu**: To provide quick access to instructions, I added a Help Menu, accessible via a question mark button at the top right. 
   - Clicking it pauses the game and opens a window, which can be closed to resume the game.
   - I decided to describe three things in the menu, namely:
     - How to Play – Rules and mechanics, with an embedded demo video ("demo-play.mp4") showing a sample round.

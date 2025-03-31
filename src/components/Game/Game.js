@@ -5,19 +5,19 @@ import { FaGithub } from "react-icons/fa"; // Import GitHub icon
 import "./Game.css";
 
 const IntroVideo = ({ onSkip, onVideoEnd }) => {
-  const videoRef = useRef(null);
-  const [videoStarted, setVideoStarted] = useState(false);
-  const [videoEnded, setVideoEnded] = useState(false);
-
+  const videoRef = useRef(null);                               // video reference
+  const [videoStarted, setVideoStarted] = useState(false);     // video started flag
+  const [videoEnded, setVideoEnded] = useState(false);         // video ended flag
+ 
   const handlePlayVideo = () => {
     if (videoRef.current) {
-      videoRef.current.play();
+      videoRef.current.play();                                // play video and set started flag
       setVideoStarted(true);
     }
   };
 
   const handleVideoEnd = () => {
-    setVideoEnded(true);
+    setVideoEnded(true);                                      // set ended flag
   };
 
   return (
@@ -117,19 +117,19 @@ const HelpMenu = ({ onClose }) => {
 };
 
 const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, processImages, onClose }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);    // first image in process shows first
+  const [isPlaying, setIsPlaying] = useState(true);                 // playing flag
 
   useEffect(() => {
     if (!isPlaying) return;
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => {
-        if (prevIndex === processImages.length - 1) {
+        if (prevIndex === processImages.length - 1) {    // if end of process images reached, set flag false and return last index
           setIsPlaying(false);
-          return prevIndex;
+          return prevIndex;                                           
         }
-        return prevIndex + 1;
+        return prevIndex + 1;                            // else, increment index (show next image in process)
       });
     }, 400);
 
@@ -137,7 +137,7 @@ const ProcessVisualization = ({ contentImage, styleImage, stylizedImage, process
   }, [isPlaying, processImages.length]);
 
   const handleReplay = () => {
-    setCurrentImageIndex(0);
+    setCurrentImageIndex(0);       // reset index and flag
     setIsPlaying(true);
   };
 
