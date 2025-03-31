@@ -110,15 +110,15 @@ The core game concept is for the player to guess the original content and style 
 
 To implement this, I needed a way to generate stylized images and store them along with their source images. Because of storage limitations for the web front-end, I needed image URLs instead of saving images locally. I chose Cloudinary, a content delivery network that provides image URLs via an API. I then modified the style transfer model's cli.py file (the main command-line interface) as follows:
 
-- Image Upload and URL Retrieval: Added a function to upload images to Cloudinary and retrieve their URLs for use in the front-end.
+- **Image Upload and URL Retrieval**: Added a function to upload images to Cloudinary and retrieve their URLs for use in the front-end.
 
-- Iteration Image Tracking: Added an iteration_image_urls attribute to the Callback class to store the URLs of the intermediate images generated during each iteration of the style transfer process. This allows for creating a visual "animation" of the style transfer.
+- **Iteration Image Tracking**: Added an iteration_image_urls attribute to the Callback class to store the URLs of the intermediate images generated during each iteration of the style transfer process. This allows for creating a visual "animation" of the style transfer.
 
-- Modified save_image(): The save_image() function now saves the image to Cloudinary and appends the resulting URL to the iteration_image_urls list.
+- **Modified save_image()**: The save_image() function now saves the image to Cloudinary and appends the resulting URL to the iteration_image_urls list.
 
-- Added Incorrect Image Arguments: Added command-line arguments for the two incorrect image options to be displayed in the game.
+- **Added Incorrect Image Arguments**: Added command-line arguments for the two incorrect image options to be displayed in the game.
 
-- write_to_json() Method: Created a write_to_json() function that retrieves the Cloudinary URLs for the content, style, and incorrect image options. It then organizes this data (content URL, style URL, incorrect option URLs, and the list of iteration_image_urls) into a dictionary, and saves this dictionary to a cloud-based JSON "basket" using GetPantry. This JSON file stores all the data needed for each round of the game. This function is called at the end of the script once the final image is created.
+- **write_to_json() Method**: Created a write_to_json() function that retrieves the Cloudinary URLs for the content, style, and incorrect image options. It then organizes this data (content URL, style URL, incorrect option URLs, and the list of iteration_image_urls) into a dictionary, and saves this dictionary to a cloud-based JSON "basket" using GetPantry. This JSON file stores all the data needed for each round of the game. This function is called at the end of the script once the final image is created.
 
 To generate data for the game, I created helper functions in the Jupyter Notebook to randomly select four unique images from the image datasets (content, style, and two incorrect options). Finally, I ran the modified style transfer script 150 times in a loop using the command line, resulting in a large JSON file containing the data for 150 game rounds.
 
