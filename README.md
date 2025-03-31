@@ -166,6 +166,7 @@ With these features in place, the game became intuitive, interactive, and educat
 ## Things to Add
 
 - Perhaps some music while the user plays
+- Perhaps a game end/quit option
 
 ---
 
