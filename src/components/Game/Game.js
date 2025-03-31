@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
 import { FaGithub } from "react-icons/fa"; // Import GitHub icon
+import { Analytics } from "@vercel/analytics/react"
 import "./Game.css";
 
 const IntroVideo = ({ onSkip, onVideoEnd }) => {
