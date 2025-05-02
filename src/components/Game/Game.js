@@ -359,7 +359,6 @@ const Game = () => {
       setTimeout(() => setFloatingPoints(null), 1000);
 
     } else {  // if the guessed pair was incorrect
-
       highlightImages(guessedPair, "incorrect");   // highlight incorrect
       shakeImages(guessedPair);                    // shake the guessed images 
       setMessage("Incorrect. Try again!");         // set message
