@@ -63,7 +63,7 @@ const HelpMenu = ({ onClose }) => {
             <li>Choose the two images that match the original pair of images.</li>
             <li>If correct, you move to the next round! 🎉</li>
             <li>If wrong, try again!</li>
-            <li>You have 30 seconds per round.</li>
+            <li>You have 15 seconds per round.</li>
           </ul>
 
           {/* Embedded Demo Video */}
@@ -207,7 +207,7 @@ const Game = () => {
   const [score, setScore] = useState(0);                                  // score 
   const [floatingPoints, setFloatingPoints] = useState(null);             // floating text for score gain
   
-  const [timeRemaining, setTimeRemaining] = useState(30);                 // time left (30 secs)
+  const [timeRemaining, setTimeRemaining] = useState(15);                 // time left (15 secs)
   const [timerActive, setTimerActive] = useState(false);                  // timer activation
   const timerRef = useRef(null);
 
@@ -234,7 +234,7 @@ const Game = () => {
       resetBorders();                            // reset image borders (for selections)
 
       // Reset and start timer
-      setTimeRemaining(30);
+      setTimeRemaining(15);
       setTimerActive(true);
 
     } catch (error) {
@@ -256,7 +256,7 @@ const Game = () => {
   const startGame = () => {
     setShowIntro(false);
     setGameStarted(true);  // Game officially starts
-    setTimeRemaining(30);  // Reset timer to 30 seconds
+    setTimeRemaining(15);  // Reset timer to 15 seconds
     setTimerActive(true);  // Start timer countdown
   };
 
@@ -284,8 +284,8 @@ const Game = () => {
 
   // Calculate timer color based on time remaining
   const getTimerColor = () => {
-    if (timeRemaining > 20) return '#28a745'; // Green - ample time left
-    if (timeRemaining > 10) return '#ffc107'; // Yellow - better hurry
+    if (timeRemaining > 10) return '#28a745'; // Green - ample time left
+    if (timeRemaining > 5) return '#ffc107'; // Yellow - better hurry
     return '#dc3545'; // Red - time nearly up
   };
 
@@ -348,8 +348,8 @@ const Game = () => {
 
       // Calculate points based on time left - quicker guesses earn more points
       let pointsEarned = 0;
-      if (timeRemaining > 20) pointsEarned = 100;
-      else if (timeRemaining > 10) pointsEarned = 50;
+      if (timeRemaining > 10) pointsEarned = 100;
+      else if (timeRemaining > 5) pointsEarned = 50;
       else pointsEarned = 20;
 
       setScore(prevScore => prevScore + pointsEarned);  // update score
@@ -455,7 +455,7 @@ const Game = () => {
                 <div
                   className="timer-bar"
                   style={{
-                    height: `${(timeRemaining / 30) * 100}%`,
+                    height: `${(timeRemaining / 15) * 100}%`,
                     backgroundColor: getTimerColor()
                   }}
                 />
